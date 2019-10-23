@@ -1,0 +1,120 @@
+﻿@model RealEstate.Models.PropertyViewModel
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<!-- Portfolio Section Heading -->
+<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">
+    @(Model.Property != null && Model.Property.Id != 0 ? "Edit property" : "Create new property")
+</h2>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-secondary"></div>
+    <input type="hidden" asp-for="Property.Id" />
+    <div class="form-group">
+        <label for="inputName">Name</label>
+        <input asp-for="Property.Name" class="form-control" id="inputName" placeholder="<enter name>" />
+    </div>
+    <div class="form-group">
+        <label for="textDescription">Description</label>
+        <textarea asp-for="Property.Description" class="form-control" id="textDescription">
+        </textarea>
+    </div>
+    <div class="form-group">
+        <label for="inputPrice">Price</label>
+        <input asp-for="Property.Price" class="form-control" id="inputPrice" placeholder="<make it expensive>" />
+    </div>
+    <div class="form-group">
+        <label for="selectBathrooms">Number of bathrooms</label>
+        <select class="form-control" id="selectBathrooms" asp-for="Property.NumberOfBathrooms">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="selectBedrooms">Number of bedrooms</label>
+        <select class="form-control" id="selectBedrooms" asp-for="Property.NumberOfBedrooms">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="checkHasAirConditioning" asp-for="Property.HasAirConditioning">
+        <label class="form-check-label" for="checkHasAirConditioning">Air Conditioning</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="checkHasBroadband" asp-for="Property.HasBroadband">
+        <label class="form-check-label" for="checkHasBroadband">Broadband</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="checkHasBalcony" asp-for="Property.HasBalcony">
+        <label class="form-check-label" for="checkHasBalcony">Balcony</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="checkHasRemoteGarage" asp-for="Property.HasRemoteGarage">
+        <label class="form-check-label" for="checkHasRemoteGarage">Remote garage</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="checkHasFloorboards" asp-for="Property.HasFloorboards">
+        <label class="form-check-label" for="checkHasFloorboards">Floorboards</label>
+    </div>
+
+    @if (Model.Property != null && Model.Property.Assets != null)
+    {
+        <div class="form-group m-4">
+            @for (int assetIndex = 0; assetIndex < Model.Property.Assets.Count; assetIndex++)
+            {
+                var asset = Model.Property.Assets[assetIndex];
+
+                <div class="row m-2">
+                    <div class="col-3">
+                        <img src="@asset.ImageUrl" class="img-thumbnail" />
+                    </div>
+                    <div class="col-5">
+                        <input asp-for="Property.Assets[assetIndex].Id" type="hidden" />
+                        <input asp-for="Property.Assets[assetIndex].Description" class="form-control" placeholder="enter a description" />
+                    </div>
+                    <div class="col-auto">
+                        <a asp-route="RemoveImage" asp-route-propertyId="@Model.Property.Id" asp-route-assetId="@asset.Id">
+                            Remove image
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="form-group m-5">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2" asp-route="UpsertProperty">Save</button>
+            </div>
+            @if (Model.Property != null && Model.Property.Id != 0)
+            {
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-danger mb-2" asp-action="DeleteProperty">Delete</button>
+                </div>
+                <div class="col-auto">
+                    <a asp-route="SelectImagesForUpload" asp-route-propertyId="@Model.Property.Id" class="nav-link">Upload images</a>
+                </div>
+            }
+        </div>
+    </div>
+</form>

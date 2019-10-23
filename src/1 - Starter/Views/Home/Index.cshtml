@@ -1,0 +1,43 @@
+﻿@model RealEstate.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Portfolio Section Heading -->
+<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Featured properties</h2>
+
+<!-- Icon Divider -->
+<div class="divider-custom">
+    <div class="divider-custom-line"></div>
+    <div class="divider-custom-icon">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="divider-custom-line"></div>
+</div>
+
+<!-- Portfolio Grid Items -->
+<div class="row">
+
+    @foreach (var featuredProperty in Model.FeaturedProperties)
+    {
+    <div class="col-md-6 col-lg-4">
+        <div
+             class="portfolio-item mx-auto modal-content"
+             data-toggle="modal"
+             data-target="#modalContainer"
+             data-contenturl="@Url.RouteUrl("PropertyDetailsRoute", new { propertyId = featuredProperty.Property.Id })">
+            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                <div class="portfolio-item-caption-content text-center text-white">
+                    <i class="fas fa-plus fa-3x"></i>
+                </div>
+            </div>
+            @if (featuredProperty.MainImageUrl != null)
+            {
+                <img class="img-fluid" src="@featuredProperty.MainImageUrl" alt="">
+            }
+            <span class="text-center">@featuredProperty.Property.Name</span>
+        </div>
+    </div>
+    }
+</div>
+

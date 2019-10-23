@@ -1,0 +1,128 @@
+﻿@model RealEstate.Models.PropertyViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Portfolio Modal - Title -->
+                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@Model.Property.Name</h2>
+                <!-- Icon Divider -->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="divider-custom-line"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Model.Property.Assets?.Count > 0)
+{
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @for (var index = 0; index < Model.Property.Assets.Count; index++)
+            {
+                <li data-target="#carouselExampleIndicators" data-slide-to="@index" @(index == 0 ? "class=\"active\"" : "")></li>
+            }
+        </ol>
+        <div class="carousel-inner">
+            @foreach (var asset in Model.Property.Assets)
+            {
+                <div class="carousel-item @(Model.Property.Assets.IndexOf(asset) == 0 ? "active" : "")">
+                    <img class="d-block w-100" src="@asset.ImageUrl" alt="">
+                    @if (asset.Description != null)
+                    {
+                        <div class="carousel-caption d-none d-md-block">
+                            <p>@asset.Description</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+}
+
+<div class="row">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <p>
+                    Number of bathrooms: @Model.Property.NumberOfBathrooms<br />
+                    Number of bedrooms: @Model.Property.NumberOfBedrooms<br />
+                    <b>Price: @Model.Property.Price</b>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    @if (Model.Property.HasAirConditioning)
+    {
+        <div class="col-auto">
+            &#10004; Air conditioning
+        </div>
+    }
+
+    @if (Model.Property.HasBalcony)
+    {
+        <div class="col-auto">
+            &#10004; Balcony
+        </div>
+    }
+
+    @if (Model.Property.HasBroadband)
+    {
+        <div class="col-auto">
+            &#10004; Broadband
+        </div>
+    }
+
+    @if (Model.Property.HasFloorboards)
+    {
+        <div class="col-auto">
+            &#10004; Floorboards
+        </div>
+    }
+
+    @if (Model.Property.HasRemoteGarage)
+    {
+        <div class="col-auto">
+            &#10004; Remote garage
+        </div>
+    }
+</div>
+
+<div class="row">
+    <div class="container text-center">
+        <p class="mb-5">
+            @Model.Property.Description
+        </p>
+    </div>
+</div>
+
+@if (Model.IsUserAdmin)
+{
+    <div class="row">
+        <div class="container text-center">
+            <a asp-route="EditProperty" asp-route-propertyId="@Model.Property.Id" class="badge badge-primary">Edit</a>
+        </div>
+    </div>
+}

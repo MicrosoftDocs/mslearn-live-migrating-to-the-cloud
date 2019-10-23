@@ -1,0 +1,95 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0", 
+    "parameters": {
+        "appServiceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Must be globally unique. The site will be hosted at [name].azurewebsites.net"
+            },
+            "defaultValue": "learn-realestate-ADD-SOMETHING-TO-MAKE-THIS-GLOBALLY-UNIQUE"
+        },
+        "hostingPlanName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the App Service Plan - we create a new one. The name must be unique within your subscription."
+              },
+              "defaultValue": "ASP-Learn-RealEstate"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-02-01",
+            "name": "[parameters('appServiceName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+              ],
+            "tags": {
+                " ProjectType": "LearnLive"
+            },
+            "properties": {
+                "name": "[parameters('appServiceName')]",
+                "siteConfig": {
+                  "appSettings": [
+                    {
+                      "name": "CloudStorageAccountName",
+                      "value": "get this from the settings of your storage account"
+                    },
+                    {
+                      "name": "CloudStorageAccountKey",
+                      "value": "get this from the settings of your storage account"
+                    },
+                    {
+                      "name": "CloudStorageBaseUrl",
+                      "value": "https://YOUR_STORAGE_ACCOUNT_NAME.blob.core.windows.net"
+                    },
+                    {
+                      "name": "CloudStorageBlobContainer",
+                      "value": "houseimages"
+                    }
+                  ],
+                    "connectionStrings": [
+                        {
+                            "name": "DefaultConnection",
+                            "connectionString": "get this from your SQL Database resource",
+                            "type": "SQLAzure"
+                        }
+                    ],
+                    "metadata": [
+                        {
+                            "name": "CURRENT_STACK",
+                            "value": "dotnetcore"
+                        }
+                    ],
+                    "alwaysOn": false
+                },
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+                "hostingEnvironment": "",
+                "clientAffinityEnabled": true
+            }
+        },
+        {
+            "apiVersion": "2018-02-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "kind": "",
+            "tags": {
+                " ProjectType": "LearnLive"
+            },
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "workerSize": "0",
+                "workerSizeId": "0",
+                "numberOfWorkers": "1",
+                "hostingEnvironment": ""
+            },
+            "sku": {
+                "Name": "F1",
+                "Tier" : "Free"
+            }
+        }
+    ]
+}

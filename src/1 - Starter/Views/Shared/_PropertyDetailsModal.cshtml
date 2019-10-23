@@ -1,0 +1,31 @@
+﻿@model RealEstate.Models.PropertyViewModel
+
+<div class="container text-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Portfolio Modal - Title -->
+            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">@Model.Property.Name</h2>
+            <!-- Icon Divider -->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Modal - Image -->
+            @if (Model.MainImageUrl != null)
+            {
+            <img class="img-fluid rounded mb-5" src="@Model.MainImageUrl" alt="">
+            }
+            <!-- Portfolio Modal - Text -->
+            <p>
+                <b>Price: @Model.Property.Price</b>
+            </p>
+            <p class="mb-5">
+                @Model.Property.Description
+            </p>
+            <a asp-route="ShowPropertyFullDetails" class="btn-link">Show all details</a>
+        </div>
+    </div>
+</div>

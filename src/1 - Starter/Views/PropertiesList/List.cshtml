@@ -1,0 +1,66 @@
+﻿@model RealEstate.Models.PropertyListViewModel
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Mvc.Common;
+@using X.PagedList;
+
+@{
+    ViewData["Title"] = "Property list";
+}
+
+<!-- Portfolio Section Heading -->
+<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Our properties</h2>
+
+<!-- Icon Divider -->
+<div class="divider-custom">
+    <div class="divider-custom-line"></div>
+    <div class="divider-custom-icon">
+        <i class="fas fa-star"></i>
+    </div>
+    <div class="divider-custom-line"></div>
+</div>
+
+@using (Html.BeginForm("GetProperties", "PropertiesList", FormMethod.Post))
+{
+<div class="form-group row justify-content-center">
+    <label for="searchInput" class="col-auto col-form-label">Search&nbsp;for:</label>
+    <div class="col-auto">
+        @Html.TextBox("searchString", Model.SearchString, null, new { @class = "form-control", id = "searchInput" })
+    </div>
+    <input type="submit" value="Search" class="btn btn-primary col-auto" />&nbsp;
+    <a asp-route="GetProperties">Clear search</a>
+    @Html.ActionLink("sort by date", "GetProperties", "PropertiesList", new { sortBy = "LastUpdatedUtc", sortAscending = !Model.SortAscending, searchString = Model.SearchString }, new { @class = "col-auto" })
+    @Html.ActionLink("sort by name", "GetProperties", "PropertiesList", new { sortBy = "Name", sortAscending = !Model.SortAscending, searchString = Model.SearchString }, new { @class = "col-auto" })
+    @Html.ActionLink("sort by price", "GetProperties", "PropertiesList", new { sortBy = "Price", sortAscending = !Model.SortAscending, searchString = Model.SearchString }, new { @class = "col-auto" })
+</div>
+}
+
+<div class="row">
+    @foreach (var item in Model.Properties)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="portfolio-item mx-auto modal-content"
+                 data-toggle="modal"
+                 data-target="#modalContainer"
+                 data-contenturl="@Url.RouteUrl("PropertyDetailsRoute", new { propertyId = item.Property.Id })">
+                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                    <div class="portfolio-item-caption-content text-center text-white">
+                        <i class="fas fa-plus fa-3x"></i>
+                    </div>
+                </div>
+                @if (item.MainImageUrl != null)
+                {
+                <img class="img-thumbnail rounded" src="@item.MainImageUrl" alt="">
+                }
+                <span class="text-center">@item.Property.Name</span>
+            </div>
+        </div>
+    }
+</div>
+
+@(Html.PagedListPager((IPagedList)Model.Properties,
+pageNum => Url.RouteUrl("GetProperties", new { pageNumber = pageNum, searchString = Model.SearchString, sortBy = Model.SortBy, sortAscending = Model.SortAscending }),
+new PagedListRenderOptions
+{
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" }
+}))
