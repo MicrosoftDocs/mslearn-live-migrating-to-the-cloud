@@ -36,7 +36,6 @@ You will have to provide the following credentials:
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice.json"><img src="armtemplates/deploybutton.png"></a>
 
-
 ### Option 2: Create the web application and reference code from Github
 This template will create the same resources as option 1, but will allow to select a Github repo and a branch to build. The deployment will not be automatic/continous but instead you will be able to go to the web app's Deployment Center option and click the "Sync" button at the top to get the latest sources and have them built. For automatic deployments, see the instructions in this document.
 
