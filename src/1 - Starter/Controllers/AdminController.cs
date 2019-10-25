@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using RealEstate.Entities;
 using RealEstate.Models;
 using RealEstate.Services;
@@ -18,14 +17,14 @@ namespace RealEstate.Controllers
 	[Authorize(Policy = "AdministratorOnly")]
 	public class AdminController : Controller
 	{
-		public AdminController(IDataRepository repo, IHostingEnvironment env)
+		public AdminController(IDataRepository repo, IImageUpload uploadService)
 		{
 			_repo = repo;
-			_env = env;
+			_uploadService = uploadService;
 		}
 
 		readonly IDataRepository _repo;
-		readonly IHostingEnvironment _env;
+		readonly IImageUpload _uploadService;
 
 		[HttpGet(Name = "AdminMain")]
 		public IActionResult Index()
@@ -122,28 +121,23 @@ namespace RealEstate.Controllers
 			{
 				if (file != null || file.Length != 0)
 				{
-					// Create a File Info 
+					// Create a File Info  
 					var fi = new FileInfo(file.FileName);
 
 					var newFilename = property.Id +
-						"_" +
-						string.Format("{0:d}", (DateTime.Now.Ticks / 10) % 100000000) +
-						fi.Extension;
+					"_" +
+					string.Format("{0:d}", (DateTime.Now.Ticks / 10) % 100000000) +
+					fi.Extension;
 
-					var webPath = _env.WebRootPath;
-					var path = Path.Combine("", webPath + @"\assets\" + newFilename);
-
-					var pathToSave = "/assets/" + newFilename;
-
-					using (var stream = new FileStream(path, FileMode.Create))
+					using (var stream = file.OpenReadStream())
 					{
-						await file.CopyToAsync(stream);
-					}
+						var imageUrl = await _uploadService.StoreImage(newFilename, stream);
 
-					property.Assets.Add(new PropertyAsset {
-						ImageUrl = pathToSave,
-						PropertyId = property.Id.Value
-					});
+						property.Assets.Add(new PropertyAsset {
+							ImageUrl = imageUrl,
+							PropertyId = property.Id.Value
+						});
+					}
 				}
 			}
 

@@ -83,19 +83,20 @@ namespace RealEstate
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-			// For Uploading images to the servers file system (for single server systems only)
-			//var assetsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "assets");
-			//services.AddSingleton<IImageUpload>(new LocalFileImageUpload(assetsFolder, @"/assets/"));
+			// For uploading images to the servers file system (for single server systems only).
+			services.AddSingleton<IImageUpload>(new LocalFileImageUpload(
+				localImagePath: Path.Combine(_hostingEnv.WebRootPath, "assets"),
+				imageBaseUrl: "/assets/"));
 
 			// For uploading to Azure Blob Storage - configuration for local development is read from appsettings.Development.json and uses a predefined
 			// account name and account key as described here: https://docs.microsoft.com/de-de/azure/storage/common/storage-use-emulator#authorize-with-shared-key-credentials
-			// Adding scoped so in case config values are changed, they will be picked up
-			services.AddScoped<IImageUpload>(provider => new StorageUpload(new StorageUploadConfiguration {
-				AccountName = Configuration.GetValue<string>("CloudStorageAccountName"),
-				AccountKey = Configuration.GetValue<string>("CloudStorageAccountKey"),
-				ContainerName = Configuration.GetValue<string>("CloudStorageBlobContainer"),
-				BlobStorageBaseUrl = Configuration.GetValue<string>("CloudStorageBaseUrl")
-			}));
+			// Adding scoped so in case config values are changed, they will be picked up.
+			services.AddScoped<IImageUpload>(provider => new AzureBlobStorageImageUpload(
+				Configuration.GetValue<string>("CloudStorageAccountName"),
+				Configuration.GetValue<string>("CloudStorageAccountKey"),
+				Configuration.GetValue<string>("CloudStorageBlobContainer"),
+				Configuration.GetValue<string>("CloudStorageBaseUrl")
+			));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

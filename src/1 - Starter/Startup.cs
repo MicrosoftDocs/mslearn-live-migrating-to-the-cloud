@@ -59,7 +59,7 @@ namespace RealEstate
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			bool shouldUseAzureDbLiveConnection = Environment.GetEnvironmentVariable("UseAzureDBLiveConnection") == "true";
+			var shouldUseAzureDbLiveConnection = Environment.GetEnvironmentVariable("UseAzureDBLiveConnection") == "true";
 			_logger.LogInformation("Hosting environment name: " + _hostingEnv.EnvironmentName);
 			_logger.LogInformation("Hosting environment is development? " + _hostingEnv.IsDevelopment());
 			_logger.LogInformation("Hosting environment is production? " + _hostingEnv.IsProduction());
@@ -82,6 +82,11 @@ namespace RealEstate
 			}
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+			// For uploading images to the servers file system (for single server systems only).
+			services.AddSingleton<IImageUpload>(new LocalFileImageUpload(
+				localImagePath: Path.Combine(_hostingEnv.WebRootPath, "assets"),
+				imageBaseUrl: "/assets/"));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

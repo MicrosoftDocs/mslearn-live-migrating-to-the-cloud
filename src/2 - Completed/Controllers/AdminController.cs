@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileProviders;
 using RealEstate.Entities;
 using RealEstate.Models;
 using RealEstate.Services;
@@ -18,18 +17,13 @@ namespace RealEstate.Controllers
 	[Authorize(Policy = "AdministratorOnly")]
 	public class AdminController : Controller
 	{
-		public AdminController(IDataRepository repo, IFileProvider fileProvider,
-			IHostingEnvironment env, IImageUpload uploadService)
+		public AdminController(IDataRepository repo, IHostingEnvironment env, IImageUpload uploadService)
 		{
 			_repo = repo;
-			_fileProvider = fileProvider;
-			_env = env;
 			_uploadService = uploadService;
 		}
 
 		readonly IDataRepository _repo;
-		readonly IFileProvider _fileProvider;
-		readonly IHostingEnvironment _env;
 		readonly IImageUpload _uploadService;
 
 		[HttpGet(Name = "AdminMain")]
@@ -132,13 +126,12 @@ namespace RealEstate.Controllers
 
 					var newFilename = property.Id +
 					"_" +
-					String.Format("{0:d}", (DateTime.Now.Ticks / 10) % 100000000) +
+					string.Format("{0:d}", (DateTime.Now.Ticks / 10) % 100000000) +
 					fi.Extension;
 
-					// This stream the physical file to the allocate wwwroot/ImageFiles folder 
 					using (var stream = file.OpenReadStream())
 					{
-						var imageUrl = await _uploadService.StoreStream(newFilename, stream);
+						var imageUrl = await _uploadService.StoreImage(newFilename, stream);
 
 						property.Assets.Add(new PropertyAsset {
 							ImageUrl = imageUrl,
