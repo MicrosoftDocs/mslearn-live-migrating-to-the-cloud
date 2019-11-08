@@ -41,7 +41,7 @@
             "apiVersion": "2018-02-01",
             "name": "[parameters('appServiceName')]",
             "type": "Microsoft.Web/sites",
-            "location": "[resourceGroup().location]",
+            "location": "Central US",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
               ],
@@ -67,6 +67,10 @@
                     {
                       "name": "CloudStorageBlobContainer",
                       "value": "houseimages"
+                    },
+                    {
+                        "name": "PROJECT",
+                        "value": "src/2 - Completed/RealEstate.csproj"
                     }
                   ],
                    "connectionStrings": [
@@ -108,7 +112,7 @@
             "apiVersion": "2018-02-01",
             "name": "[parameters('hostingPlanName')]",
             "type": "Microsoft.Web/serverfarms",
-            "location": "[resourceGroup().location]",
+            "location": "Central US",
             "kind": "",
             "tags": {
                 " ProjectType": "LearnLive"

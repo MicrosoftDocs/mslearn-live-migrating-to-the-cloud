@@ -15,6 +15,25 @@
                 "description": "The name of the App Service Plan - we create a new one. The name must be unique within your subscription."
               },
               "defaultValue": "ASP-Learn-RealEstate"
+        },
+        "repoURL": {
+            "type": "string",
+            "metadata": {
+                "description": "Paste the complete URL of your forked Github repository here."
+              },
+              "defaultValue": "https://github.com/YOUR_GITHUB_ACCOUNT_NAME/RealEstate"
+        },
+        "branch": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the branch you want to build. 'starter' is the initial solution, 'blobstorage' is the version using Azure Blob Storage."
+              },
+              "defaultValue": "starter",
+              "allowedValues": [
+                "starter",
+                "blobstorage",
+                "master"
+            ]
         }
     },
     "resources": [
@@ -22,7 +41,7 @@
             "apiVersion": "2018-02-01",
             "name": "[parameters('appServiceName')]",
             "type": "Microsoft.Web/sites",
-            "location": "[resourceGroup().location]",
+            "location": "Central US",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
               ],
@@ -48,9 +67,13 @@
                     {
                       "name": "CloudStorageBlobContainer",
                       "value": "houseimages"
+                    },
+                    {
+                        "name": "PROJECT",
+                        "value": "src/2 - Starter/RealEstate.csproj"
                     }
                   ],
-                    "connectionStrings": [
+                   "connectionStrings": [
                         {
                             "name": "DefaultConnection",
                             "connectionString": "get this from your SQL Database resource",
@@ -68,7 +91,22 @@
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
                 "hostingEnvironment": "",
                 "clientAffinityEnabled": true
-            }
+            },
+            "resources": [
+                {
+                    "apiVersion": "2015-08-01",
+                    "name": "web",
+                    "type": "sourcecontrols",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Web/Sites', parameters('appServiceName'))]"
+                    ],
+                    "properties": {
+                        "RepoUrl": "[parameters('repoURL')]",
+                        "branch": "[parameters('branch')]",
+                        "IsManualIntegration": true
+                    }
+                }
+            ]
         },
         {
             "apiVersion": "2018-02-01",
