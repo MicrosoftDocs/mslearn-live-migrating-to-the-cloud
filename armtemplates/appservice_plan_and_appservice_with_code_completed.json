@@ -22,18 +22,6 @@
                 "description": "Paste the complete URL of your forked Github repository here."
               },
               "defaultValue": "https://github.com/YOUR_GITHUB_ACCOUNT_NAME/RealEstate"
-        },
-        "branch": {
-            "type": "string",
-            "metadata": {
-                "description": "The name of the branch you want to build. 'starter' is the initial solution, 'blobstorage' is the version using Azure Blob Storage."
-              },
-              "defaultValue": "starter",
-              "allowedValues": [
-                "starter",
-                "blobstorage",
-                "master"
-            ]
         }
     },
     "resources": [
@@ -102,7 +90,7 @@
                     ],
                     "properties": {
                         "RepoUrl": "[parameters('repoURL')]",
-                        "branch": "[parameters('branch')]",
+                        "branch": "master",
                         "IsManualIntegration": true
                     }
                 }
