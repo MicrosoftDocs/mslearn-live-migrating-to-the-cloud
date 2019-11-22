@@ -79,12 +79,12 @@ az storage account create --name $storageName --sku Standard_LRS
 
 storageconnstr=$(az storage account show-connection-string --name $storageName --resource-group $resourceGroup \
     --query connectionString --output tsv)
-position=echo $storageconnstr | grep -b -o AccountKey
+storageaccountkey=${ConnStr#*AccountKey=}
 
 az webapp config appsettings set --name $appName --resource-group $resourceGroup \
     --settings "CloudStorageAccountName=$storageName"
 az webapp config appsettings set --name $appName --resource-group $resourceGroup \
-    --settings "CloudStorageAccountKey=$storageconnstr"
+    --settings "CloudStorageAccountKey=$storageaccountkey"
 az webapp config appsettings set --name $appName --resource-group $resourceGroup \
     --settings "CloudStorageBlobContainer=$storageContainer"
 az webapp config appsettings set --name $appName --resource-group $resourceGroup \
