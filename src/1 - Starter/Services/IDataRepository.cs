@@ -18,5 +18,7 @@ namespace RealEstate.Services
 		/// </summary>
 		/// <param name="existingProperty"></param>
 		void StopTracking(Property existingProperty);
+
+		void CreateTestData();
 	}
 }

@@ -18,8 +18,13 @@ namespace RealEstate.Controllers
 		readonly IDataRepository _repo;
 
 		[HttpGet(Name ="Home")]
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(bool forceMigration = false)
 		{
+			if(forceMigration)
+			{
+				_repo.CreateTestData();
+			}
+
 			var featuredProperties = await _repo.GetFeaturedProperties();
 
             var vm = new HomeViewModel
