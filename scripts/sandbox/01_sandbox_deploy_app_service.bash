@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # This script is meant to be executed in the Learn Live Sandbox Cloud Shell.
 
 # Variables
