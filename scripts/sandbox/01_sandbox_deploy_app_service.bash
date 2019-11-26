@@ -54,13 +54,14 @@ printf "Creating App Service (this can take a while)...\n"
 az webapp create --name $appName --plan $appPlanName
 printf "\n"
 
-printf "Configuring app settings:"
-printf "...App name: %s" $appName
-printf "...Project to build: %s" $kuduBuildProject
-printf "...Repo: %s" $gitDirectory
+printf "Configuring app settings:\n"
+printf "...App name: %s\n" $appName
+printf "...Project to build: %s\n" $kuduBuildProject
+printf "...Repo: %s\n" $gitDirectory
 az webapp config appsettings set --name "$appName" --settings PROJECT="$kuduBuildProject"
-printf "Deploying app..."
+
+printf "Deploying app...\n"
 az webapp deployment source config --branch master --name $appName --repo-url $gitDirectory
 
 printf "\n"
-printf "Done. :-)"
+printf "Done. :-)\n"
