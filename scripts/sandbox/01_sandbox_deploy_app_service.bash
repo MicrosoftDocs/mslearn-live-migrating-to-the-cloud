@@ -23,7 +23,7 @@ do
 printf "No Github repo provided as a parameter.\n"
 printf "Please enter the URL of the Github repo (e.g., https://www.github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/).\n"
 printf "Github repo URL: "
-read gitDirectory
+read -p gitDirectory
 done
 
 printf
