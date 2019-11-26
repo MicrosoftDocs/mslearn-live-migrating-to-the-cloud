@@ -71,9 +71,11 @@ If you do not have access to the deployed solution (maybe you deleted it to save
 - Go to your [Learn Live Sandbox activation page](https://aka.ms/learnlivesandbox)
 - Locate Azure Cloud Shell on the right-hand side
 
-In Cloud Shell, execute the following command which will execute a script to create an App Service and deploy the app directly from Github:
+Copy the following command and paste it into Cloud Shell. This executes a script to create an App Service and deploy the app directly from Github:
 
-wget -O - https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/sandbox/01_sandbox_deploy_app_service.bash | bash
+`wget -O script1.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/sandbox/01_sandbox_deploy_app_service.bash && chmod +x ./script1.bash && ./script1.bash`
+
+The script will ask you to enter the URL of your fork of the Github repo. 
 
 When finished, open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to open the Learn Live Sandbox subscription directly](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)) to see the created resources.
 
