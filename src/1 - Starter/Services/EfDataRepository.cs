@@ -102,7 +102,7 @@ namespace RealEstate.Services
 			_context.Entry<Property>(existingProperty).State = EntityState.Detached;
 		}
 
-		public void CreateTestData()
+		public void RunMigration()
 		{
 			_context.Database.Migrate();
 		}

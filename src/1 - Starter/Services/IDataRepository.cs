@@ -19,6 +19,6 @@ namespace RealEstate.Services
 		/// <param name="existingProperty"></param>
 		void StopTracking(Property existingProperty);
 
-		void CreateTestData();
+		void RunMigration();
 	}
 }

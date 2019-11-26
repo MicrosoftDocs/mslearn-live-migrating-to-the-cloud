@@ -22,7 +22,7 @@ namespace RealEstate.Controllers
 		{
 			if(forceMigration)
 			{
-				_repo.CreateTestData();
+				_repo.RunMigration();
 			}
 
 			var featuredProperties = await _repo.GetFeaturedProperties();

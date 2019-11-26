@@ -56,7 +56,7 @@ namespace RealEstate.Services
 		{
 		}
 
-		public void CreateTestData()
+		public void RunMigration()
 		{ }
 	}
 }
