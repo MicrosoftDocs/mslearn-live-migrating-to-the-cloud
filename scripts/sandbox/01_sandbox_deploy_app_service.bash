@@ -34,8 +34,8 @@ printf "\n"
 
 # Only needed when executing locally and not in Cloud Shell
 # echo "Logging in to Learn Live Sandbox - make sure you have activated one at aka.ms/learnlivesandbox. If you haven't, please cancel this script using CTRL+C."
-az login --tenant learn.docs.microsoft.com
-printf "\n"
+# az login --tenant learn.docs.microsoft.com
+# printf "\n"
 
 printf "Getting resource group name from sandbox..."
 resourceGroup=$(az group list --query '[0].name' --output tsv)

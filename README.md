@@ -30,11 +30,11 @@ This repository accompanies our first series of sessions. It contains all our co
 
 We keep a list of all resources (links, apps) we use in the sessions in this [resources.md](resources.md) file.
 
-To follow along with the exercises of the sessions, please fork this repository into your own Github account. You can do this by either clicking the "Fork" button top right or by using this link: [I prefer fork links over fork buttons.](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork)
-
 ## Set up your  environment
 
 The following paragraphs provide information how to prepare your (development) environment to be able to follow along the live sessions.
+
+To follow along with the exercises of the sessions, please fork this repository into your own Github account. You can do this by either clicking the "Fork" button top right or by using this link: [I prefer fork links over fork buttons.](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork)
 
 ### Microsoft Learn Live Sandbox
 
@@ -63,122 +63,21 @@ Session one ended with the web application being migrated into an Azure App Serv
 
 If you do not have access to the deployed solution (maybe you deleted it to save money or used the Learn Live Sandbox), please follow these instructions.
 
-* Fork our repository if not already done ([fork now](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork))
-* Use the Learn Live Sandbox if desired ([click here to activate](https://aka.ms/learnlivesandbox)
-
 #### If you are using your own Azure subscription
 
 * Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription
-* Open the Cloud Shell 
+* Open the Cloud Shell (the button is located at the very top, next to the notifications bell and looks like this: `>_`) and select to use a "Bash" shell.
 
 #### If you are using the Learn Live Sandbox
 
-* Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to directly open the Learn Live Sandbox subscription](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true))
-* 
+* Go to your [Learn Live Sandbox activation page](https://aka.ms/learnlivesandbox)
+* Locate Azure Cloud Shell on the right hand side
 
-We provide so called ARM (Azure Resource Manager) templates to help you automate the deployment of Azure resources like the web app. Whenever you deploy a resource there are some basic settings that must always be configured:
+In Cloud Shell, execute the following command which will execute a script to create an App Service and deploy the app directly from Github:
 
-* **Subscription** - select the Azure subscription you would like to deploy the resource to. This can be your private subscription, a free trial or a sandbox subscription. If you deploy multiple resources make sure to always select the same subscription.
-* **Resource group** - resource groups make it easier to manager multiple resources by bundling them together. When deploying your first resource you'd likely create a new resource group for all resources of this project. For subsequent deployments, select the same resource group.
-* **Location** - defines to which data center your resources will be deployed to. If you select a resource group, this dropdown may be deactivated because the resource group already defines the location.
+`wget -O - https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/sandbox/01_sandbox_deploy_app_service.bash | bash`
 
-### Option 1: Create the web application without code
-This will take you to the Azure Portal and ask for the credentials neccessary to create a free App Service Plan and an empty App Service. You can then manually deploy the solution from Visual Studio or setup automatic deployment.
-
-You will have to provide the following credentials:
-
-* **App Service Name** - this will define the URL of your web application. Make sure to only use characters that are allowed in a URL. We recommend 'a' - 'z' and 0 - 9 and hyphens; no spaces. As this is going to be a URL it must be globally unique. We recommend to add your initials as a suffix and a random number. If the name is not unique, you will get an error during deployment.
-* **Hosting Plan Name** - this is the name of the App Service Plan your web application (App Service) will be hosted under. This name must be unique within your subscription. You can keep the default, specify a different name or specify a name of a service plan that already exists (this would create the web app under the existing plan).
-
-**Note:** free app service plans (F1) are not available in all locations. To avoid errors while keeping the setup as simple as possible, _the ARM templates always use "Central US" for the location_, regardless of the selection in the location dropfown.
-
-| Deployment options                                           |                                                              |
-| :----------------------------------------------------------- | :----------------------------------------------------------: |
-| Deploy to the currently selected Azure subscription          | <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice.json"><img src="armtemplates/deploybutton.png"></a> |
-| Deploy using Microsoft Learn Sandbox (must be activated - [click here to activate](https://aka.ms/learnlivesandbox)) | <a href="https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice.json"><img src="armtemplates/deploybutton.png"></a> |
-
-### Option 2: Create the web application and reference the starter solution from Github
-
-This template will create the same resources as option one but will in addition allow you to select a Github repo containing the VanArsdel Ltd. real estate project to build and deploy to Azure.
-
-From the selected repository the template will deploy the _starter_ solution which does not use an Azure Storage Account to persist images. Instead, images will be stored locally to the web project.
-
-The deployment will not be automatic/continous. You will be able to go to the web app's Deployment Center option and click the "Sync" button at the top to get the latest sources and have them built. For automatic deployments, see the instructions further down in this document.
-
-You will have to provide the following credentials:
-
-* **App Service Name** and **Hosting Plan Name** - please see comments of option one for details.
-* **Repo URL** - this is the URL of the forked repository 
-
-After deployment, the web app will show you a warning message about setting a database connection string. You need a SQL database instance and configure the connection string (see instructions below).
-
-**Note:** free app service plans (F1) are not available in all locations. To avoid errors while keeping the setup as simple as possible, _the ARM templates always use "Central US" for the location_, regardless of the selection in the location dropfown.
-
-| Deployment options                                           |                                                              |
-| :----------------------------------------------------------- | :----------------------------------------------------------: |
-| Deploy to the currently selected Azure subscription          | <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice_with_code_starter.json"><img src="armtemplates/deploybutton.png"></a> |
-| Deploy using Microsoft Learn Sandbox (must be activated - [click here to activate](https://aka.ms/learnlivesandbox)) | <a href="https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice_with_code_starter.json"><img src="armtemplates/deploybutton.png"></a> |
-
-### Option 3: Create the web application and reference the completed solution from Github
-
-This template will create the same resources as option two but deploy the _completed_ solution of the project which uses an Azure Storage Account instead of saving image files locally to the web project.
-
-After deployment, the web app will show you a warning message about setting a database connection string. You need a SQL database instance and configure the connection string (see instructions below).
-
-Also, you will have to create a Storage Account and configure the deployed web app to connect to it. For details see below.
-
-**Note:** free app service plans (F1) are not available in all locations. To avoid errors while keeping the setup as simple as possible, _the ARM templates always use "Central US" for the location_, regardless of the selection in the location dropfown.
-
-| Deployment options                                           |                                                              |
-| :----------------------------------------------------------- | :----------------------------------------------------------: |
-| Deploy to the currently selected Azure subscription          | <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice_with_code.json"><img src="armtemplates/deploybutton.png"></a> |
-| Deploy using Microsoft Learn Sandbox (must be activated - [click here to activate](https://aka.ms/learnlivesandbox)) | <a href="https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fappservice_plan_and_appservice_with_code_completed.json"><img src="armtemplates/deploybutton.png"></a> |
-
-
-
-# Create the database server instance and the database
-
-The following template helps you create a database server and a SQL database instance. 
-
-You will have to provide the following credentials:
-
-* **Database Server Name** - this will define the URL of your database server. Make sure to only use characters that are allowed in a URL. We recommend 'a' - 'z' and 0 - 9 and hyphens; no spaces. As this is going to be a URL, it must be globally unique. We recommend to add your initials as a suffix and a random number. If the name is not unique, you will get an error during deployment.
-* **Database Name** - the name of the database within your database server. It must be unique within the database server.
-* **Sql Administrator Login** - the login name of the administrator of the database. It will be part of the database's connection string. It's a SQL Identifier, and not a typical system name (like admin, administrator, sa, root, dbmanager, loginmanager, etc.), or a built-in database user or role (like dbo, guest, public, etc.). Make sure your name doesn't contain whitespaces, unicode characters, or nonalphabetic characters, and that it doesn't begin with numbers or symbols.
-* **Sql Administrator Password** - the login password. Your password must be at least 8 characters in length. Your password must contain characters from three of the following categories – English uppercase letters, English lowercase letters, numbers (0-9), and non-alphanumeric characters (!, $, #, %, etc.). The password may not contain parts of the administrator login name.
-
-**Note:** the database will not be configured in the app service. To do this, wait for the deployment to complete, get the database's connection string and insert it in the app service's configuration section where you will find a connection string setting called "DefaultConnection". Also, you will want to update the database's firewall settings to allow your development machine to connect to the database.
-
-| Deployment options                                           |                                                              |
-| :----------------------------------------------------------- | :----------------------------------------------------------: |
-| Deploy to the currently selected Azure subscription          | <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fdatabase.json"><img src="armtemplates/deploybutton.png"></a> |
-| Deploy using Microsoft Learn Sandbox (must be activated - [click here to activate](https://aka.ms/learnlivesandbox)) | <a href="https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fdatabase.json"><img src="armtemplates/deploybutton.png"></a> |
-
-
-
-# Configure automatic deployment of the app service
-If you want the web application to be deployed automatically if a change in your repository has been madem you can do this manually by opening the app in Azure Portal and select "Deployment Center". There, you can setup a "App Service Build Service" (Kudu) based build pipeline using Github as the source code provider.
-
-**Why no script?** Configuring automatic continous deployment will require you to authorize Azure to acccess your Github account and a callback (webhook) must be created within the repository. It is faster to go through the portal which provides an easy to understand UI.
-
-# Add a blob storage to your Azure subscription
-As part of the refactoring process of the web application we integrate blob storage.
-
-To help you create the required storage account, use the template below. The resulting storage account will have a blob storage with a precreated container names "propertyimages" which is used by the web appllication.
-
-You will have to provide the following credentials:
-
-* **Storage Account Name** - Specifies the name of the Azure Storage account. This must be globally unique and 3 to 24 characters long, all lowercase, no hyphens.
-
-| Deployment options                                           |                                                              |
-| :----------------------------------------------------------- | :----------------------------------------------------------: |
-| Deploy to the currently selected Azure subscription          | <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fstorageaccount.json"><img src="armtemplates/deploybutton.png"></a> |
-| Deploy using Microsoft Learn Sandbox (must be activated - [click here to activate](https://aka.ms/learnlivesandbox)) | <a href="https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftDocs%2Fmslearn-live-migrating-to-the-cloud%2Fmaster%2Farmtemplates%2Fstorageaccount.json"><img src="armtemplates/deploybutton.png"></a> |
-
-
-
-
-# Contributing
+When finished, open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to directly open the Learn Live Sandbox subscription](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)) to see the created resources.Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
