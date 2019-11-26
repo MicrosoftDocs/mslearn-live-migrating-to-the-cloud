@@ -30,12 +30,16 @@ sqlServerPassword="MyVassword##"
 storageName="vanarsdelstorage$suffix"
 storageContainer="propertyimages"
 gitdirectory="https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/"
+# Set this to either "src/1 - Starter/RealEstate.csproj" or "src/2 - Completed/RealEstate.csproj"
+kuduBuildProject="src/1 - Starter/RealEstate.csproj"
+
+# ----------------------------------------------------------------------------------
 
 # Login to sandbox directory - not required when using cloud shell
 # az login --tenant learn.docs.microsoft.com
 
 # Only when using sandbox: get sandbox' only resource group name
-$resourceGroup=$(az group list --query '[0].name' --output tsv)
+resourceGroup=$(az group list --query '[0].name' --output tsv)
 
 # Create a resource group - only if not in sandbox. Cannot create new groups in sandbox.
 az group create --name $resourceGroup --location $location
@@ -50,6 +54,9 @@ az appservice plan create --name $appPlanName --sku FREE
 # Create a Web App in the App Service Plan
 az webapp create --name $appName --plan $appPlanName
 
+# Add a setting for Kudu so it knows which project to build.
+az webapp config appsettings set --name $appName --settings PROJECT=$kuduBuildProject
+
 # Create a SQL Database Server
 az sql server create --name $serverName --admin-user $sqlServerUsername --admin-password $sqlServerPassword
 
@@ -58,11 +65,6 @@ az sql server firewall-rule create --server $serverName --name AllowAzureResourc
 
 # Create the database in the database server using a basic (DTU) tier.
 az sql db create --server $serverName --name $databaseName --service-objective Basic
-
-# TODO: Set config param to deploy starter or completed ("name": "PROJECT", "value": "src/1 - Starter/RealEstate.csproj")
-# TODO: Make deployment automatic
-# Setup Github deployment against the site
-az webapp deployment source config --branch master --manual-integration --name $appName --repo-url $gitdirectory
 
 # Create a database connection string
 connstring=$(az sql db show-connection-string --name $databaseName --server $serverName --client ado.net --output tsv)
@@ -74,18 +76,16 @@ connstring=${connstring//<password>/$sqlServerPassword}
 # Store the SQL Connection string to the database
 az webapp config connection-string set -n $appName -t SQLAzure --settings DefaultConnection=$connstring
 
+# Setup Github deployment against the site
+az webapp deployment source config --branch master --name $appName --repo-url $gitdirectory
+
 # Create Storage Account
 az storage account create --name $storageName --sku Standard_LRS
 
-storageconnstr=$(az storage account show-connection-string --name $storageName --resource-group $resourceGroup \
-    --query connectionString --output tsv)
+storageconnstr=$(az storage account show-connection-string --name $storageName --query connectionString --output tsv)
 storageaccountkey=${ConnStr#*AccountKey=}
 
-az webapp config appsettings set --name $appName --resource-group $resourceGroup \
-    --settings "CloudStorageAccountName=$storageName"
-az webapp config appsettings set --name $appName --resource-group $resourceGroup \
-    --settings "CloudStorageAccountKey=$storageaccountkey"
-az webapp config appsettings set --name $appName --resource-group $resourceGroup \
-    --settings "CloudStorageBlobContainer=$storageContainer"
-az webapp config appsettings set --name $appName --resource-group $resourceGroup \
-    --settings "CloudStorageBaseUrl=https://$storageName.blob.core.windows.net/"                
+az webapp config appsettings set --name $appName --settings "CloudStorageAccountName=$storageName"
+az webapp config appsettings set --name $appName --settings "CloudStorageAccountKey=$storageaccountkey"
+az webapp config appsettings set --name $appName --settings "CloudStorageBlobContainer=$storageContainer"
+az webapp config appsettings set --name $appName --settings "CloudStorageBaseUrl=https://$storageName.blob.core.windows.net/"                
