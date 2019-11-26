@@ -1,55 +1,66 @@
+# This script is meant to be executed in the Learn Live Sandbox Cloud Shell.
+
 # Variables
 suffix=$RANDOM
 resourceGroup="VanArsdelLearnLive$suffix"
-appName="VanArsdelAppAndSQL$suffix"
-appPlanName="ap-$appName"
+appName="AppService-VanArsdel$suffix"
+appPlanName="AppPlan-$appName"
 location="centralus"
-serverName="vanardselappandsql$suffix"
 # Get Github repo from script parameters
 gitDirectory=$1
 kuduBuildProject="src/1 - Starter/RealEstate.csproj"
 
-echo Microsoft Learn Live Deployment script
-echo .
+clear
+printf "Microsoft Learn Live Deployment script\n"
+printf "======================================\n"
+printf "\n"
 
 # If no URL is provided as a parameter, ask user to enter now.
 while [ -z $gitDirectory ]
 do
-echo Please enter the URL of the Github repo (e.g., https: \/\/github.com\/MicrosoftDocs\/mslearn-live-migrating-to-the-cloud\/)
+printf "No Github repo provided as a parameter.\n"
+printf "Please enter the URL of the Github repo (e.g., https://www.github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/).\n"
+printf "Github repo URL: "
 read gitDirectory
 done
 
-echo This is what we will use to deploy the app:
-echo ...Github repository: $gitDirectory
-echo ...Project being built: $kuduBuildProject
-echo ...Location use: $location
-echo ...App Service name: $appName
-echo .
+printf
+printf "This is what we will use to deploy the app:\n"
+printf "...Github repository: %s\n" $gitDirectory
+printf "...Project being built: %s\n" "$kuduBuildProject"
+printf "...Location use: %s\n" $location
+printf "...App Service name: %s\n" $appName
+printf "\n"
 
-echo Logging in to Learn Live Sandbox - make sure you have activated one at aka.ms/learnlivesandbox...
+# Only needed when executing locally and not in Cloud Shell
+# echo "Logging in to Learn Live Sandbox - make sure you have activated one at aka.ms/learnlivesandbox. If you haven't, please cancel this script using CTRL+C."
 az login --tenant learn.docs.microsoft.com
-echo .
+printf "\n"
 
-echo Getting resource group name from sandbox...
+printf "Getting resource group name from sandbox..."
 resourceGroup=$(az group list --query '[0].name' --output tsv)
-echo Resource group: $resourceGroup
-echo .
+printf "Resource group: %s\n" $resourceGroup
+printf "\n"
 
 # Set defaults for all following commands
 az configure --defaults group=$resourceGroup
 az configure --defaults location=$location 
 
-echo Creating App Service Plan using a FREE tier...
+printf "Creating App Service Plan using a FREE tier...\n"
 az appservice plan create --name $appPlanName --sku FREE
-echo .
+printf "\n"
 
-echo Creating App Service...
+printf "Creating App Service (this can take a while)...\n"
 az webapp create --name $appName --plan $appPlanName
-echo .
+printf "\n"
 
-echo Configuring deployment...
-az webapp config appsettings set --name $appName --settings PROJECT=$kuduBuildProject
-az webapp deployment source config --branch master --name $appName --repo-url $gitdirectory
+printf "Configuring app settings:"
+printf "...App name: %s" $appName
+printf "...Project to build: %s" $kuduBuildProject
+printf "...Repo: %s" $gitDirectory
+az webapp config appsettings set --name "$appName" --settings PROJECT="$kuduBuildProject"
+printf "Deploying app..."
+az webapp deployment source config --branch master --name $appName --repo-url $gitDirectory
 
-echo .
-echo Done. :-)
+printf "\n"
+printf "Done. :-)"

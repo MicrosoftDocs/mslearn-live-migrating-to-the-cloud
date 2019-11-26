@@ -61,10 +61,19 @@ In session one we move the locally running ASP.NET Core MVC application into an 
 
 Session one ended with the web application being migrated into an Azure App Service. In session two we migrate the local database and its data into the cloud.
 
-If you do not have access to the deployed solution (maybe you deleted it to save money or used the Learn Live Sandbox), please follow these instructions:
+If you do not have access to the deployed solution (maybe you deleted it to save money or used the Learn Live Sandbox), please follow these instructions.
 
 * Fork our repository if not already done ([fork now](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork))
-* Use Learn Live Sandbox if desired ([click here to activate](https://aka.ms/learnlivesandbox))
+* Use the Learn Live Sandbox if desired ([click here to activate](https://aka.ms/learnlivesandbox)
+
+#### If you are using your own Azure subscription
+
+* Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription
+* Open the Cloud Shell 
+
+#### If you are using the Learn Live Sandbox
+
+* Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to directly open the Learn Live Sandbox subscription](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true))
 * 
 
 We provide so called ARM (Azure Resource Manager) templates to help you automate the deployment of Azure resources like the web app. Whenever you deploy a resource there are some basic settings that must always be configured:
