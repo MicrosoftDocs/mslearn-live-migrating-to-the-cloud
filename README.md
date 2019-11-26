@@ -77,7 +77,9 @@ In Cloud Shell, execute the following command which will execute a script to cre
 
 `wget -O - https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/sandbox/01_sandbox_deploy_app_service.bash | bash`
 
-When finished, open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to directly open the Learn Live Sandbox subscription](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)) to see the created resources.Contributing
+When finished, open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to directly open the Learn Live Sandbox subscription](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)) to see the created resources.
+
+# Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
