@@ -1,4 +1,4 @@
-# Session 1: "Choose the best hosting option and deploy the app"
+# Prepare for session 1: "Choose the best hosting option and deploy the app"
 
 In session one, we move the locally running ASP.NET Core MVC application into an Azure App Service. Before we get there, we want to make sure the app is running locally.
 
