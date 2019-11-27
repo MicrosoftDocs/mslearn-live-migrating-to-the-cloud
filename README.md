@@ -22,74 +22,65 @@ To get the most out of this course, you…
 
 We are aiming this content at beginner to intermediate users of Azure. 
 
-## About this repository
+## Prepare for the sessions
 
-This repository accompanies our first series of sessions. It contains all our code samples and projects. We also provide details about the steps necessary to prepare your environment for each session. Resources
+To follow along with the exercises of the sessions, please **start by forking this repository into your own Github account**. You can do this by either clicking the "Fork" button top right or by using this link: [I prefer fork links over fork buttons.](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork)
 
-We keep a list of all resources (links, apps) we use in the sessions in this [resources.md](resources.md) file.
-
-## Set up your environment
-
-The following paragraphs provide information on how to prepare your (development) environment to be able to follow along with the live sessions.
-
-To follow along with the exercises of the sessions, please fork this repository into your own Github account. You can do this by either clicking the "Fork" button top right or by using this link: [I prefer fork links over fork buttons.](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork)
-
-### Microsoft Learn Live Sandbox
+### Use the Microsoft Learn Live Sandbox to get free access to Azure resources
 
 We use Azure throughout this series to create resources like Azure App Services, Azure SQL Database, and Azure Storage. Some of these resources are available for free while others are paid offers. To follow along with our series, you have two options.
 
 - Option 1: Use your Azure subscription and clean up unused resources manually if you no longer need them, to avoid unintended costs. This gives you the benefit of having a persisted environment from the first all to the last session of our series. It also allows you to use all the features of Azure.
 - Option 2: Use our Microsoft Learn Sandbox ([click here to activate](https://aka.ms/learnlivesandbox)). The sandbox provides you with a concierge subscription and a temporary resource group. The sandbox deletes itself after four hours. You do not have to pay anything for using the sandbox. It is entirely free. The sandbox offers most of the Azure features needed for this series. Some resources, however, are not available. If a feature is unavailable in the sandbox, we call it out explicitly during the delivery of the session. 
 
-### Prepare for "Session 1: Deploy the web application"
+### Prepare for session 1: "Choose the best hosting option and deploy the app"
 
-In session one, we move the locally running ASP.NET Core MVC application into an Azure App Service. Before we get there, we want to make sure the app is running locally.
+* Choose an appropriate hosting model
+* Deploy the application to Azure
 
-**Note for Mac users:** You cannot run the app locally. Although our application is based on .NET Core and can be deployed to Linux, it is using "Microsoft SQL Server Express Local DB" which is not available for macOS. In our second session, we migrate the database into the cloud. When this is done you will be able to follow along with Visual Studio Code or Visual Studio 2019 for macOS.
+[Open instructions](./session1.md)
 
-- Fork our repository if not already done ([fork now](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork))
-- Clone the repository to your PC
-- Open the starter solution under "src/1 - Starter" (you can use Visual Studio 2019 or Visual Studio Code)
-- Build and run the app
-- It will open the browser and show an error about a missing database migration 
-- Click the button shown to start the migration (alternatively, you can run dotnet ef database update on the command line)
-- When the migration has completed, refresh the page
+------
 
-### Prepare for "Session 2: Migrate the database into the cloud"
+### Prepare for session 2: "Choose an appropriate database solution"
 
-Session one ended with the web application being migrated into an Azure App Service. In session two, we migrate the local database and its data into the cloud.
+* Select the appropriate Azure database solution for VanArsdel
+* Migrate on-premises data into Azure
 
-If you do not have access to the deployed solution (maybe you deleted it to save money or used the Learn Live Sandbox), please follow these instructions.
+[Open instructions](./session2.md)
 
-#### If you are using your Azure subscription
+------
 
-- Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription
-- Open the Cloud Shell (the button is located at the very top, next to the notifications bell and looks like this: >_) and select to use a "Bash" shell.
+### Prepare for session 3: "Choose an appropriate database solution"
 
-#### If you are using the Learn Live Sandbox
+* Identify the benefits of automated deployments vs manual deployment
+* Automate your build and deployment using Azure App Service Deployment Center
 
-- Go to your [Learn Live Sandbox activation page](https://aka.ms/learnlivesandbox)
-- Locate Azure Cloud Shell on the right-hand side
+[Open instructions](./session3.md)
 
-Copy the following command and paste it into Cloud Shell. This executes a script to create an App Service and deploy the app directly from Github:
+------
 
-`wget -O script1.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/sandbox/01_sandbox_deploy_app_service.bash && chmod +x ./script1.bash && ./script1.bash`
+### Prepare for session 4: "Identify the benefits of Azure Storage"
 
-The script will ask you to enter the URL of your fork of the Github repo. 
+* Analyze existing storage implementation
+* Explain the four Azure Storage services
+* Select an appropriate storage approach
 
-When finished, open [Azure Portal](https://portal.azure.com) in your browser and select your subscription ([click here to open the Learn Live Sandbox subscription directly](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true)) to see the created resources.
+[Open instructions](./session4.md)
 
-### Prepare for "Session 3: Automated deployments"
+------
 
-TODO
+### Prepare for session 5: "Monitoring and scaling your applications in Azure"
 
-### Prepare for "Session 4: Azure Storage"
+* Monitor your application against metrics
 
-TODO
+* Configure Alerts when your application hits certain thresholds
 
-### Prepare for "Session 5: Monitor and scale your app service"
+* Setup scaling rules for your application
 
-TODO
+[Open instructions](./session5.md)
+
+----
 
 # Contributing
 
