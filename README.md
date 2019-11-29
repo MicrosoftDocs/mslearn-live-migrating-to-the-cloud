@@ -12,7 +12,7 @@ Our first series is titled "Migrate to the cloud". We have created a scenario wh
 
 There is a deployed version of the application available at [vanarsdel-realestate.azurewebsites.net](https://vanarsdel-realestate.azurewebsites.net).
 
-To get the most out of this course, you… 
+To get the most out of this course, you…
 
 - are familiar with Visual Studio, C#, and the basics of ASP.NET Core. We are not going to be going into any depth with ASP.NET Core, so it’s not crucial you are an expert with ASP.NET Core, but it helps you read through the code. 
 - know the basics of SQL, potentially with an on-premises SQL Server installation
@@ -80,7 +80,12 @@ We use Azure throughout this series to create resources like Azure App Services,
 
 [Open instructions](./session5.md)
 
-----
+------
+
+## Resources
+
+* Azure Portal: [portal.azure.com](https://portal.azure.com)
+* Code repository: [aka.ms/vanarsdelrepo](https://aka.ms/vanarsdelrepo)
 
 # Contributing
 

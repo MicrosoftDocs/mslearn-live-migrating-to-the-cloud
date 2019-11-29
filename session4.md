@@ -29,10 +29,22 @@ To follow along with the session, we recommend to get the project into the state
 
 Copy the following command and paste it into Cloud Shell:
 
-`wget -O script3.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/02_deploy_app_service_and_database.bash && chmod +x ./script3.bash && ./script3.bash`
+`wget -O prepsession4.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/02_deploy_app_service_and_database.bash && chmod +x ./prepsession4.bash && ./prepsession4.bash`
 
 **Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
 
 When finished, the script will output the URL of the App Service and append the query parameter `?forceMigration=true` - please follow this link to ensure the database gets populated with data.
 
 You are now ready to join session four! :-)
+
+## Resources
+
+* Overiew of features of Azure Storage Account settings: [docs.microsoft.com/de-de/azure/storage/common/storage-introduction#types-of-storage-accounts](https://docs.microsoft.com/de-de/azure/storage/common/storage-introduction#types-of-storage-accounts)
+* Storage Redundancy reference: [docs.microsoft.com/de-de/azure/storage/common/storage-redundancy](https://docs.microsoft.com/de-de/azure/storage/common/storage-redundancy)
+* Azure Storage Explorer: [azure.microsoft.com/en-us/features/storage-explorer/](https://azure.microsoft.com/en-us/features/storage-explorer/)
+* Windows.Azure.Storage.Blob Nuget: [www.nuget.org/packages/Microsoft.Azure.Storage.Blob/](https://www.nuget.org/packages/Microsoft.Azure.Storage.Blob/)
+* Microsoft Learn Module: [Store Application Data with Azure Blob storage](https://docs.microsoft.com/en-us/learn/modules/store-app-data-with-azure-blob-storage/)
+* Microsoft Learn Module: [Organize Azure storage blobs with properties and metadata](https://docs.microsoft.com/en-us/learn/modules/organize-blobs-properties-metadata/6-add-blob-metadata-using-application-code)
+* Microsoft Learn Module: [Optimize storage performance and costs using Blob storage tiers](https://docs.microsoft.com/en-us/learn/modules/optimize-archive-costs-blob-storage/)
+* Microsoft Learn Module: [Secure your Azure Storage Account](https://docs.microsoft.com/en-us/learn/modules/secure-azure-storage-account/)
+* Microsoft Learn Module: [https://docs.microsoft.com/en-us/learn/modules/connect-an-app-to-azure-storage/](Connect an app to Azure Storage)

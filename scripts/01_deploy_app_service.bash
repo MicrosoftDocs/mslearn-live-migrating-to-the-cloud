@@ -4,7 +4,7 @@
 
 # Variables
 suffix=$RANDOM
-resourceGroup="VanArsdelLearnLive$suffix"
+resourceGroup="RGVanArsdelLearnLive$suffix"
 appName="AppService-VanArsdel$suffix"
 appPlanName="AppPlan-$appName"
 location="centralus"
@@ -69,4 +69,4 @@ az webapp deployment source config --branch master --name $appName --repo-url $g
 printf "\n"
 printf "Done. :-)\n"
 printf "\n"
-printf "Please follow this link: https://%s?forceMigration=true" $webAppHostName
+printf "Please follow this link: https://%s?forceMigration=true\n\n" $webAppHostName

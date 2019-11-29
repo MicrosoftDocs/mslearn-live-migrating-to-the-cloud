@@ -27,10 +27,19 @@ We have prepared a script that:
 
 Copy the following command and paste it into Cloud Shell: 
 
-`wget -O script1.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/01_deploy_app_service.bash && chmod +x ./script1.bash && ./script1.bash`
+`wget -O prepsession2.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/01_deploy_app_service.bash && chmod +x ./prepsession2.bash && ./prepsession2.bash`
 
 **Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
 
 When finished, the script will output the URL of the App Service and append the query parameter `?forceMigration=true` - please follow this link to ensure the database gets populated with data.
 
 You are now ready to join session two! :-)
+
+## Resources
+
+* Microsoft Learn Module: [Provision an Azure SQL database](https://docs.microsoft.com/en-us/learn/modules/provision-azure-sql-db/)
+* Data Migration Assistant app: [aka.ms/datamigrationassistant](https://aka.ms/datamigrationassistant)
+* Azure Data Studio app: [Azure Data Studio](https://docs.microsoft.com/de-de/sql/azure-data-studio/what-is?view=sql-server-2017)
+* SQL Database features overview: [aka.ms/sql-database-features](https://aka.ms/sql-database-features)
+* Azure Database Migration Service: [azure.microsoft.com/en-us/services/database-migration/](https://azure.microsoft.com/en-us/services/database-migration/)
+* Run SQL Server Enterprise on a VM: [azure.microsoft.com/en-in/pricing/details/virtual-machines/sql-server-enterprise/](https://azure.microsoft.com/en-in/pricing/details/virtual-machines/sql-server-enterprise/)

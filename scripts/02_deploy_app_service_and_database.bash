@@ -4,12 +4,12 @@
 
 # Variables
 suffix=$RANDOM
-resourceGroup="VanArsdelLearnLive$suffix"
+resourceGroup="RGVanArsdelLearnLive$suffix"
 appName="AppService-VanArsdel$suffix"
 appPlanName="AppPlan-$appName"
 location="centralus"
-serverName="vanardselappandsql$suffix"
-databaseName="VanArsdelData"
+serverName="dbservervanarsdel$suffix"
+databaseName="DBVanArsdelData"
 sqlServerUsername="VanArsdelAdmin"
 sqlServerPassword="MyVassword##"
 # Get Github repo from script parameters
@@ -43,7 +43,7 @@ printf "\n"
 # az login --tenant learn.docs.microsoft.com
 # printf "\n"
 
-printf "Getting resource group name from sandbox..."
+printf "Getting resource group name from sandbox...\n"
 resourceGroup=$(az group list --query '[0].name' --output tsv)
 printf "Resource group: %s\n" $resourceGroup
 printf "\n"
@@ -82,13 +82,14 @@ az sql db create --server $serverName --name $databaseName --service-objective B
 
 printf "Assembling database connection string...\n"
 connstring=$(az sql db show-connection-string --name $databaseName --server $serverName --client ado.net --output tsv)
+printf "Found connection string %s - injecting username and password..." %connstring
 connstring=${connstring//<username>/$sqlServerUsername}
 connstring=${connstring//<password>/$sqlServerPassword}
 
 printf "Storing the SQL Connection string to the database...\n"
-az webapp config connection-string set -n $appName -t SQLAzure --settings DefaultConnection=$connstring
+az webapp config connection-string set -n $appName -t SQLAzure --settings DefaultConnection="$connstring"
 
 printf "\n"
 printf "Done. :-)\n"
 printf "\n"
-printf "Please follow this link: https://%s?forceMigration=true" $webAppHostName
+printf "Please follow this link: https://%s?forceMigration=true\n\n" $webAppHostName

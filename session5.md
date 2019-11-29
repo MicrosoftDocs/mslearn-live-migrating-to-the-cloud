@@ -1,4 +1,4 @@
-# Session 5: "Monitoring and scaling your applications in Azure"
+# Prepare for session 5: "Monitoring and scaling your applications in Azure"
 
 In session four we added a centralized, cloud-based storage to VanArsdel's solution. Now that the project is fully running in the cloud, we want to make sure things are going well.
 
@@ -34,7 +34,7 @@ To follow along with the session, we recommend to get the project into the state
 
 Copy the following command and paste it into Cloud Shell:
 
-`wget -O script4.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/03_deploy_app_service_and_database_and_storage.bash && chmod +x ./script4.bash && ./script4.bash`
+`wget -O prepsession5.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/03_deploy_app_service_and_database_and_storage.bash && chmod +x ./prepsession5.bash && ./prepsession5.bash`
 
 **Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
 

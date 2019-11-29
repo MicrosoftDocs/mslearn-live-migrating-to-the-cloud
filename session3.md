@@ -28,10 +28,14 @@ To follow along with the session, we recommend to get the project into the state
 
 Copy the following command and paste it into Cloud Shell:
 
-`wget -O script2.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/rr-azcli/scripts/02_deploy_app_service.bash && chmod +x ./script2.bash && ./script2.bash`
+`wget -O prepsession3.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/03_deploy_app_service_and_database.bash && chmod +x ./prepsession3.bash && ./prepsession3.bash`
 
 **Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
 
 When finished, the script will output the URL of the App Service and append the query parameter `?forceMigration=true` - please follow this link to ensure the database gets populated with data.
 
 You are now ready to join session three! :-)
+
+## Resources
+
+* Documentation: [Continuous deployment to Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/deploy-continuous-deployment)

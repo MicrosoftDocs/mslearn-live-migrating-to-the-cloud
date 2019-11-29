@@ -4,13 +4,19 @@
 
 # Variables
 suffix=$RANDOM
-resourceGroup="VanArsdelLearnLive$suffix"
+resourceGroup="RGVanArsdelLearnLive$suffix"
 appName="AppService-VanArsdel$suffix"
 appPlanName="AppPlan-$appName"
 location="centralus"
+serverName="dbservervanarsdel$suffix"
+databaseName="DBVanArsdelData"
+sqlServerUsername="VanArsdelAdmin"
+sqlServerPassword="MyVassword##"
+storageName="storagevanarsdel$suffix"
+storageContainer="propertyimages"
 # Get Github repo from script parameters
 gitDirectory=$1
-kuduBuildProject="src/1 - Starter/RealEstate.csproj"
+kuduBuildProject="src/2 - Completed/RealEstate.csproj"
 
 clear
 printf "Microsoft Learn Live Deployment script\n"
@@ -26,7 +32,7 @@ printf "Github repo URL: "
 read gitDirectory
 done
 
-printf
+printf "\n"
 printf "This is what we will use to deploy the app:\n"
 printf "...Github repository: %s\n" $gitDirectory
 printf "...Project being built: %s\n" "$kuduBuildProject"
@@ -39,7 +45,7 @@ printf "\n"
 # az login --tenant learn.docs.microsoft.com
 # printf "\n"
 
-printf "Getting resource group name from sandbox..."
+printf "Getting resource group name from sandbox...\n"
 resourceGroup=$(az group list --query '[0].name' --output tsv)
 printf "Resource group: %s\n" $resourceGroup
 printf "\n"
@@ -54,6 +60,7 @@ printf "\n"
 
 printf "Creating App Service (this can take a while)...\n"
 az webapp create --name $appName --plan $appPlanName
+webAppHostName=$(az webapp show --name $appName --query 'defaultHostName' --output tsv)
 printf "\n"
 
 printf "Configuring app settings:\n"
@@ -64,6 +71,39 @@ az webapp config appsettings set --name "$appName" --settings PROJECT="$kuduBuil
 
 printf "Deploying app...\n"
 az webapp deployment source config --branch master --name $appName --repo-url $gitDirectory
+printf "\n"
+
+printf "Creating a SQL Database Server...\n"
+az sql server create --name $serverName --admin-user $sqlServerUsername --admin-password $sqlServerPassword
+
+printf "Allowing Azure resources to access the server - strangely, this is done by setting a firewall rule from 0.0.0.0 to 0.0.0.0...\n"
+az sql server firewall-rule create --server $serverName --name AllowAzureResources --start-ip-address "0.0.0.0" --end-ip-address "0.0.0.0"
+
+printf "Creating the database in the database server using a basic (DTU) tier...\n"
+az sql db create --server $serverName --name $databaseName --service-objective Basic
+
+printf "Assembling database connection string...\n"
+connstring=$(az sql db show-connection-string --name $databaseName --server $serverName --client ado.net --output tsv)
+printf "Found connection string %s - injecting username and password..." %connstring
+connstring=${connstring//<username>/$sqlServerUsername}
+connstring=${connstring//<password>/$sqlServerPassword}
+
+printf "Storing the SQL Connection string to the database...\n"
+az webapp config connection-string set -n $appName -t SQLAzure --settings DefaultConnection="$connstring"
+
+printf "Creating a Storage Account..."
+az storage account create --name $storageName --sku Standard_LRS --kind StorageV2
+
+storageconnstr=$(az storage account show-connection-string --name $storageName --query connectionString --output tsv)
+storageaccountkey=${storageconnstr#*AccountKey=}
+
+az webapp config appsettings set --name $appName --settings "CloudStorageAccountName=$storageName"
+az webapp config appsettings set --name $appName --settings "CloudStorageAccountKey=$storageaccountkey"
+az webapp config appsettings set --name $appName --settings "CloudStorageBlobContainer=$storageContainer"
+az webapp config appsettings set --name $appName --settings "CloudStorageBaseUrl=https://$storageName.blob.core.windows.net/"                
+
 
 printf "\n"
 printf "Done. :-)\n"
+printf "\n"
+printf "Please follow this link: https://%s?forceMigration=true\n\n" $webAppHostName
