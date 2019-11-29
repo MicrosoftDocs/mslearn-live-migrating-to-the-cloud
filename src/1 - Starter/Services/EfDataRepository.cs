@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RealEstate.Data;
 using RealEstate.Entities;
 using System;
@@ -13,7 +14,6 @@ namespace RealEstate.Services
 		public EfDataRepository(ApplicationDbContext context)
 		{
 			_context = context;
-			
 		}
 
 		readonly ApplicationDbContext _context;
@@ -100,6 +100,11 @@ namespace RealEstate.Services
 		public void StopTracking(Property existingProperty)
 		{
 			_context.Entry<Property>(existingProperty).State = EntityState.Detached;
+		}
+
+		public void RunMigration()
+		{
+			_context.Database.Migrate();
 		}
 	}
 }

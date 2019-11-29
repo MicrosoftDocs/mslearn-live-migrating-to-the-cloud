@@ -55,5 +55,10 @@ namespace RealEstate.Services
 		public void StopTracking(Property existingProperty)
 		{
 		}
+
+		public void RunMigration()
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }
