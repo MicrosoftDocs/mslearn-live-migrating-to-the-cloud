@@ -28,7 +28,7 @@ To follow along with the session, we recommend to get the project into the state
 
 Copy the following command and paste it into Cloud Shell:
 
-`wget -O prepsession3.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/03_deploy_app_service_and_database.bash && chmod +x ./prepsession3.bash && ./prepsession3.bash`
+`wget -O prepsession3.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/02_deploy_app_service_and_database.bash && chmod +x ./prepsession3.bash && ./prepsession3.bash`
 
 **Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
 
