@@ -9,18 +9,24 @@ In this session, you will:
 
 If you do not have access to the deployed solution (maybe you deleted it to save money or used the Learn Live Sandbox), please follow these instructions.
 
-We have prepared a script that:
+## The instructions and scripts provided in this document will:
 
-1. Creates an App Service Plan
-2. Creates an App Service
-3. Deploys the app directly from Github into the App Service
+1. Create an App Service Plan
+2. Create an App Service
+3. Deploy the app directly from Github into the App Service
 
-#### If you are using your Azure subscription
+## Prepare your environment
+
+- Fork our repository ([aka.ms/vanarsdelrepo](https://aka.ms/vanarsdelrepo)) if not already done ([fork now](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork))
+- Clone the repository to your PC
+- Open the starter solution under "src/1 - Starter" (you can use Visual Studio 2019 or Visual Studio Code)
+
+### If you are using your Azure subscription
 
 - Open [Azure Portal](https://portal.azure.com) in your browser and select your subscription
 - Open the Cloud Shell (the button is located at the very top, next to the notifications bell and looks like this: >_) and select to use a "Bash" shell.
 
-#### If you are using the Learn Live Sandbox
+### If you are using the Learn Live Sandbox
 
 - Go to your [Learn Live Sandbox activation page](https://aka.ms/learnlivesandbox)
 - Locate Azure Cloud Shell on the right-hand side
@@ -29,7 +35,7 @@ Copy the following command and paste it into Cloud Shell:
 
 `wget -O prepsession2.bash https://raw.githubusercontent.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/master/scripts/01_deploy_app_service.bash && chmod +x ./prepsession2.bash && ./prepsession2.bash`
 
-**Note:** The script will prompt you to enter the URL of your fork of the Github repo. 
+**Note:** The script will prompt you to enter the URL of **your fork** of the Github repo. 
 
 When finished, the script will output the URL of the App Service and append the query parameter `?forceMigration=true` - please follow this link to ensure the database gets populated with data.
 
