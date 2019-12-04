@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 
 namespace RealEstate
 {
@@ -67,10 +68,14 @@ namespace RealEstate
 
 			// Use the mock data repo if there is no SQL connection string or it seems invalid (does not contain 'Server=").
 			var sqlConnectionString = _hostingEnv.IsDevelopment() && shouldUseAzureDbLiveConnection ? Configuration.GetConnectionString("AzureDBLiveConnection") : Configuration.GetConnectionString("DefaultConnection");
-			if (string.IsNullOrWhiteSpace(sqlConnectionString) || !sqlConnectionString.ToLowerInvariant().Contains("server="))
+			var isNonWindowsDevelopment = _hostingEnv.IsDevelopment() && 
+				(RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) && 
+				sqlConnectionString.Contains("Server=(localdb)");
+			
+			if (string.IsNullOrWhiteSpace(sqlConnectionString) || !sqlConnectionString.ToLowerInvariant().Contains("server=") || isNonWindowsDevelopment)
 			{
-				_logger.LogWarning("No database connection string configured! Using mock data respository!");
-				services.AddScoped<IDataRepository, MockDataRepository>();
+				_logger.LogWarning("No database connection string configured! Using mock data repository!");
+				services.AddSingleton<IDataRepository, MockDataRepository>();
 			}
 			else
 			{
