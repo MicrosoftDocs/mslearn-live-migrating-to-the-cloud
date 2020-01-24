@@ -1,91 +1,16 @@
 # Microsoft Learn Live
 
-Welcome to Microsoft Learn Live! Microsoft Learn Live is a series of guided, live courses, presented on Twitch and designed to increase your existing knowledge of Azure technologies.
+Microsoft Learn Live is a series of instructor led courses designed to increase our learners' knowledge of Azure technologies.
+As an extension of Microsoft Learn, Learn Live helps learners to connect multiple concepts to complete a real-world project.
+Where a typical Learn module focuses on one specific job task, e.g. migrate your SQL database to Azure SQL, a Learn Live series will connect multiple job tasks to complete a full solution, e.g. migrate and secure a web based application to the cloud which includes migration of the database and the existing data.
 
-You can find all the details about Learn Live on our website at [docs.microsoft.com/learnlive](https://docs.microsoft.com/learnlive).
-
-Learn Live is part of [Microsoft Learn](https://docs.microsoft.com/learn) where you find a thoroughly designed micro-learning experience, combined with a hands-on approach that helps you arrive at your goals faster, with more confidence and at your own pace. 
+[Find out more about Learn Live](https://aka.ms/learn-live)
 
 ## Series overview
 
-Our first series is titled "Migrate to the cloud". We have created a scenario where we assume that you are a .NET developer working on an in-house system, and now it is time to make a move into the cloud. You work for a fictitious company called VanArsdel Ltd. VanArsdel is in the real estate business, and as part of this, they run a beautiful website where they are selling real estate property.
+Our first Learn Live series is titled "Migrate an ASP.NET Core application from an on-premises environment into Azure". We've created a scenario where we assume that you're a .NET developer working on an in-house system, and now it's time to make a move into the cloud. You work for a fictitious company called VanArsdel. VanArsdel is in the real estate business and they run a beautiful website where they're selling real estate property.
 
-There is a deployed version of the application available at [vanarsdel-realestate.azurewebsites.net](https://vanarsdel-realestate.azurewebsites.net).
-
-To get the most out of this course, you…
-
-- are familiar with Visual Studio, C#, and the basics of ASP.NET Core. We are not going to be going into any depth with ASP.NET Core, so it’s not crucial you are an expert with ASP.NET Core, but it helps you read through the code. 
-- know the basics of SQL, potentially with an on-premises SQL Server installation
-- are familiar with what Azure and “the cloud” is
-- have navigated the Azure Portal 
-- have created some Azure resources and possibly tried out some demos, or even better have gone through some Learn modules.
-
-We are aiming this content at beginner to intermediate users of Azure. 
-
-## Prepare for the sessions
-
-To follow along with the exercises of the sessions, please **start by forking this repository into your own Github account**. You can do this by either clicking the "Fork" button top right or by using this link: [I prefer fork links over fork buttons.](https://github.com/MicrosoftDocs/mslearn-live-migrating-to-the-cloud/fork)
-
-### Use the Microsoft Learn Live Sandbox to get free access to Azure resources
-
-We use Azure throughout this series to create resources like Azure App Services, Azure SQL Database, and Azure Storage. Some of these resources are available for free while others are paid offers. To follow along with our series, you have two options.
-
-- Option 1: Use your Azure subscription and clean up unused resources manually if you no longer need them, to avoid unintended costs. This gives you the benefit of having a persisted environment from the first all to the last session of our series. It also allows you to use all the features of Azure.
-- Option 2: Use our Microsoft Learn Sandbox ([click here to activate](https://aka.ms/learnlivesandbox)). The sandbox provides you with a concierge subscription and a temporary resource group. The sandbox deletes itself after four hours. You do not have to pay anything for using the sandbox. It is entirely free. The sandbox offers most of the Azure features needed for this series. Some resources, however, are not available. If a feature is unavailable in the sandbox, we call it out explicitly during the delivery of the session. 
-
-### Prepare for session 1: "Choose the best hosting option and deploy the app"
-
-* Choose an appropriate hosting model
-* Deploy the application to Azure
-
-[Open instructions](./session1.md)
-
-------
-
-### Prepare for session 2: "Choose an appropriate database solution"
-
-* Select the appropriate Azure database solution for VanArsdel
-* Migrate on-premises data into Azure
-
-[Open instructions](./session2.md)
-
-------
-
-### Prepare for session 3: "Choose an appropriate database solution"
-
-* Identify the benefits of automated deployments vs manual deployment
-* Automate your build and deployment using Azure App Service Deployment Center
-
-[Open instructions](./session3.md)
-
-------
-
-### Prepare for session 4: "Identify the benefits of Azure Storage"
-
-* Analyze existing storage implementation
-* Explain the four Azure Storage services
-* Select an appropriate storage approach
-
-[Open instructions](./session4.md)
-
-------
-
-### Prepare for session 5: "Monitoring and scaling your applications in Azure"
-
-* Monitor your application against metrics
-
-* Configure Alerts when your application hits certain thresholds
-
-* Setup scaling rules for your application
-
-[Open instructions](./session5.md)
-
-------
-
-## Resources
-
-* Azure Portal: [portal.azure.com](https://portal.azure.com)
-* Code repository: [aka.ms/vanarsdelrepo](https://aka.ms/vanarsdelrepo)
+[Learn more about the Azure technologies covered in this series](https://review.docs.microsoft.com/en-us/learn/modules/ms-learn-live-test/?branch=new-learn-live-test)
 
 # Contributing
 
