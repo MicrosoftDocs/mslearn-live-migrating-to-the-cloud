@@ -10,7 +10,7 @@ Where a typical Learn module focuses on one specific job task, e.g. migrate your
 
 Our first Learn Live series is titled "Migrate an ASP.NET Core application from an on-premises environment into Azure". We've created a scenario where we assume that you're a .NET developer working on an in-house system, and now it's time to make a move into the cloud. You work for a fictitious company called VanArsdel. VanArsdel is in the real estate business and they run a beautiful website where they're selling real estate property.
 
-[Learn more about the Azure technologies covered in this series](https://review.docs.microsoft.com/en-us/learn/modules/ms-learn-live-test/?branch=new-learn-live-test)
+[Learn more about the Azure technologies covered in this series](https://docs.microsoft.com/en-us/learn/modules/ms-learn-live-migrating-to-the-cloud)
 
 # Contributing
 
