@@ -5,7 +5,7 @@
         "storageAccountName": {
             "type": "string",
             "metadata": {
-                "description": "Specifies the name of the Azure Storage account. This must be globally unique and 3 to 24 characters long, all lowercase, no hyphens."
+                "description": "Specifies the name of the Azure Storage account. This must be globally unique and 3 to 24 characters long, all lowercase, no hyphens." 
             },
             "defaultValue": ""
         }
