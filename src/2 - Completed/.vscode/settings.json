@@ -1,0 +1,5 @@
+{
+	"appService.preDeployTask": "publish-release",
+	"appService.deploySubpath": "bin/Release/net5.0/publish",
+	"appService.defaultWebAppToDeploy": "/subscriptions/66be0cc0-c895-4ae3-a552-83e27b3746a3/resourceGroups/rg-learnlivesessions/providers/Microsoft.Web/sites/vanarsdel-realestate2"
+}

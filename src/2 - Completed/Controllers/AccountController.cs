@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using RealEstate.Models;
 
 namespace RealEstate.Controllers
@@ -14,6 +15,27 @@ namespace RealEstate.Controllers
 	[AllowAnonymous]
 	public class AccountController : Controller
 	{
+		public AccountController(IConfiguration config)
+		{
+			try
+			{
+				_adminName = config["AdminUsername"];
+				_adminPassword = config["AdminPassword"];
+			}
+			catch(Exception)
+			{
+				// Ignore and check resulting password below.
+			}
+
+			if(string.IsNullOrWhiteSpace(_adminPassword))
+			{
+				throw new InvalidOperationException("Admin login not configured correctly");
+			}
+		}
+
+		string _adminName;
+		string _adminPassword;
+
 		[HttpGet("login", Name = "ShowLogin")]
 		public IActionResult Login()
 		{
@@ -34,7 +56,7 @@ namespace RealEstate.Controllers
 			}
 
 			// For demo purposes we use a hardcoded username and password.
-			if (userName.ToLowerInvariant() == "admin" && password == "password")
+			if (userName.ToLowerInvariant() == _adminName && password == _adminPassword)
 			{
 				const string Issuer = "https://realestate.com";
 				var claims = new List<Claim> {
