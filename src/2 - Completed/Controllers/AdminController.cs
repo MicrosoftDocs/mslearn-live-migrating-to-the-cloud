@@ -17,7 +17,7 @@ namespace RealEstate.Controllers
 	[Authorize(Policy = "AdministratorOnly")]
 	public class AdminController : Controller
 	{
-		public AdminController(IDataRepository repo, IHostingEnvironment env, IImageUpload uploadService)
+		public AdminController(IDataRepository repo, IWebHostEnvironment env, IImageUpload uploadService)
 		{
 			_repo = repo;
 			_uploadService = uploadService;
